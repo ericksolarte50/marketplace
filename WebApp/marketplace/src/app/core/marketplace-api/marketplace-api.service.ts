@@ -14,10 +14,10 @@ export class MarketplaceApiService {
 
   getOffers(page: number, pageSize: number): Observable<OfferModel[]> {
     // TODO: implement the logic to retrieve paginated offers from the service
-    const url = `${this.marketplaceApUrl}/OffersPagination`;
+    const url = `${this.marketplaceApUrl}/offersPagination`;
     let params = new HttpParams();
-    params = params.append('PageNumber', page.toString());
-    params = params.append('PageSize', pageSize.toString());
+    params = params.append('pageNumber', page.toString());
+    params = params.append('pageSize', pageSize.toString());
     //return this.http.get(url, { params }).pipe((resp: any) => resp);
     return this.http.get<OfferModel[]>(url, { params });
   }

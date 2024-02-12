@@ -8,7 +8,7 @@ import {OfferCreationComponent} from './offers/offer-creation/offer-creation.com
 const routes: Routes = [
   {path: 'login', component: LoginComponent, pathMatch: 'full'},
   {path: '', component: OfferListComponent, pathMatch: 'full'},
-  {path: 'newoffer', component: OfferCreationComponent, pathMatch: 'full'},
+  {path: 'postnew', component: OfferCreationComponent, pathMatch: 'full'},
 ];
 
 @NgModule({

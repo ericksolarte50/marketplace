@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MarketplaceApiService } from 'src/app/core/marketplace-api/marketplace-api.service';
 import { OfferModel } from 'src/app/core/marketplace-api/models/offer.model';
+import { TempPage } from 'src/app/core/models/TempPage.model';
 
 @Component({
   selector: 'app-offer-list',
@@ -9,10 +10,12 @@ import { OfferModel } from 'src/app/core/marketplace-api/models/offer.model';
 })
 export class OfferListComponent implements OnInit {
 
-  pageSize = 4;
+  pageSize = 10;
   listOffers: OfferModel[] = [];
   totalPages;
   totalPagesNum: number = 0;
+
+  listPages: TempPage[] = [];
 
   constructor(private serviceMarcketplace: MarketplaceApiService) {
   }
@@ -27,8 +30,21 @@ export class OfferListComponent implements OnInit {
       .subscribe({
         next: (result: any) => {
           console.log("result");
-          console.log(result.data);
-          this.listOffers = result.data;
+          console.log(result);
+          this.listOffers = result.info;
+
+          for (let i = 1; i <= this.pageSize; i++) {
+            let tempPage = new TempPage(i, false, '', pageNumber);
+            if(i == pageNumber ){
+              tempPage.label = 'active';
+            }
+            
+            this.listPages.push(tempPage);
+          }
+
+          // console.log("this.listPages");
+          // console.log(this.listPages);
+
           //this.totalPages = result.totalPages;
         }
         , error: (error) => {

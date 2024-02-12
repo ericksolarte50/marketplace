@@ -1,0 +1,23 @@
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
+        <!-- <li class="page-item disabled"> -->
+        <li class="page-item" *ngIf="showBackButton" >
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        
+        <!-- <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item ">
+            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+        </li> -->
+        <!-- <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+        <li class="page-item {{tmpPages.label}}" *ngFor="let tmpPages of listPages;">
+            <a class="page-link" href="#">{{tmpPages.number}} </a>
+        </li>
+        
+
+
+        <li class="page-item" *ngIf="showNextButton">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>
