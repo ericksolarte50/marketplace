@@ -6,6 +6,7 @@
 //  writing by an officer of ROSEN. All Rights Reserved.
 // </copyright>
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Marketplace.Core.Model;
 
@@ -14,4 +15,9 @@ namespace Marketplace.Dal;
 public interface IMarketplaceDb
 {
     Task<User[]> GetUsersAsync();
+
+    Task<List<Offer>> getPageOffersAsync(int page, int size);
+
+    Task<int> countOffers();
+
 }

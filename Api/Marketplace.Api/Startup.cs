@@ -14,6 +14,7 @@ namespace Marketplace.Api
     using Marketplace.Dal.Repositories;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -52,6 +53,12 @@ namespace Marketplace.Api
 
             app.UseRouting();
 
+            app.UseCors(x => x
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .SetIsOriginAllowed(origin => true) 
+               .AllowCredentials()); 
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
@@ -65,6 +72,20 @@ namespace Marketplace.Api
 
             services.AddScoped<IUserBl, UserBl>();
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IOfferBl, OfferBl>();
+            services.AddScoped<IOfferRepository, OfferRepository>();
+
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IUrlBl>(o =>
+            {
+                var accessor = o.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor.HttpContext.Request;
+                var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+                return new UrlBl(uri);
+            });
+
+            services.AddCors();
         }
 
         #endregion
