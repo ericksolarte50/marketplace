@@ -13,7 +13,7 @@ export class OfferListComponent implements OnInit {
   listOffers: OfferModel[] = [];
   listPages: TempPage[] = [];
   pageSize = 10;
-  numberPages: number = 0;  
+  numberPages: number = 0;
   loadSuccess: boolean = false;
 
   constructor(private serviceMarcketplace: MarketplaceApiService) {
@@ -22,19 +22,17 @@ export class OfferListComponent implements OnInit {
   ngOnInit(): void {
     this.getListOffers(1);
   }
-  
-  onRefreshPage(page){
+
+  onRefreshPage(page) {
     this.getListOffers(page);
   }
 
   private getListOffers(pageNumber: number) {
     this.serviceMarcketplace.getOffers(pageNumber, this.pageSize)
       .subscribe({
-        next: (result: any) => {  
-          console.log(result);
-
+        next: (result: any) => {          
           this.listOffers = result.info;          
-          this.numberPages = result.totalPages;          
+          this.numberPages = result.numberPages;
           this.loadSuccess = true;
         }
         , error: (error) => {

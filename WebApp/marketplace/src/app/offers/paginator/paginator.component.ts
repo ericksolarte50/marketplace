@@ -110,7 +110,7 @@ export class PaginatorComponent implements OnInit {
     this.lblDisabledBackBtn = this.currentPage === 1 ? 'disabled' : '';
     this.lblDisabledNextBtn = this.currentPage === this.numberPages ? 'disabled' : '';
 
-    // console.log("FIN :: this.start: " + this.start + " this.currentPage: " + this.currentPage + " this.end: " + this.end);
+    //  console.log("FIN :: this.start: " + this.start + " this.currentPage: " + this.currentPage + " this.end: " + this.end + " this.numberPages : " + this.numberPages);
     this.changePageEvent.emit(this.currentPage);
   }
 }
