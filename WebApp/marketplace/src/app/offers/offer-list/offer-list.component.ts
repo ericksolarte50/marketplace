@@ -10,12 +10,11 @@ import { TempPage } from 'src/app/core/models/TempPage.model';
 })
 export class OfferListComponent implements OnInit {
 
-  pageSize = 10;
   listOffers: OfferModel[] = [];
-  totalPages;
-  totalPagesNum: number = 0;
-
   listPages: TempPage[] = [];
+  pageSize = 10;
+  numberPages: number = 0;  
+  loadSuccess: boolean = false;
 
   constructor(private serviceMarcketplace: MarketplaceApiService) {
   }
@@ -23,34 +22,26 @@ export class OfferListComponent implements OnInit {
   ngOnInit(): void {
     this.getListOffers(1);
   }
-
+  
+  onRefreshPage(page){
+    this.getListOffers(page);
+  }
 
   private getListOffers(pageNumber: number) {
     this.serviceMarcketplace.getOffers(pageNumber, this.pageSize)
       .subscribe({
-        next: (result: any) => {
-          console.log("result");
+        next: (result: any) => {  
           console.log(result);
-          this.listOffers = result.info;
 
-          for (let i = 1; i <= this.pageSize; i++) {
-            let tempPage = new TempPage(i, false, '', pageNumber);
-            if(i == pageNumber ){
-              tempPage.label = 'active';
-            }
-            
-            this.listPages.push(tempPage);
-          }
-
-          // console.log("this.listPages");
-          // console.log(this.listPages);
-
-          //this.totalPages = result.totalPages;
+          this.listOffers = result.info;          
+          this.numberPages = result.totalPages;          
+          this.loadSuccess = true;
         }
         , error: (error) => {
           console.log("error: " + error);
         }
       })
   }
+
 
 }

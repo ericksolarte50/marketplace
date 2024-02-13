@@ -1,7 +1,7 @@
 export class TempPage {
 
-    constructor(public number: number, public active: boolean, 
-        public label: string, public currentPage: number) {
-
+    constructor(public number: number,
+        public label: string,
+        public currentPage: number) {
     }
 }
