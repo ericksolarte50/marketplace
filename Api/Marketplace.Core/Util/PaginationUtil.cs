@@ -16,22 +16,22 @@ namespace Marketplace.Core.Util
             string route)
         {
             var respose = new ResponsePagination<List<T>>(pagedData, pagination.pageNumber, pagination.pageSize);
-            var totalPages = ((double)totalOffers / (double)pagination.pageSize);
-            int roundedTotalPages = Convert.ToInt32(Math.Ceiling(totalPages));
+            var numberPages = ((double)totalOffers / (double)pagination.pageSize);
+            int numberPagesFinal = Convert.ToInt32(Math.Ceiling(numberPages));
             
-            respose.NextPage =
-                pagination.pageNumber >= 1 && pagination.pageNumber < roundedTotalPages
+            respose.nextPage =
+                pagination.pageNumber >= 1 && pagination.pageNumber < numberPagesFinal
                 ? urlBl.getPageUrl(new Pagination(pagination.pageNumber + 1, pagination.pageSize), route)
                 : null;
-            respose.PreviousPage =
-                pagination.pageNumber - 1 >= 1 && pagination.pageNumber <= roundedTotalPages
+            respose.previousPage =
+                pagination.pageNumber - 1 >= 1 && pagination.pageNumber <= numberPagesFinal
                 ? urlBl.getPageUrl(new Pagination(pagination.pageNumber - 1, pagination.pageSize), route)
                 : null;
 
-            respose.FirstPage = urlBl.getPageUrl(new Pagination(1, pagination.pageSize), route);
-            respose.LastPage = urlBl.getPageUrl(new Pagination(roundedTotalPages, pagination.pageSize), route);
-            respose.TotalPages = roundedTotalPages;
-            respose.TotalRecords = totalOffers;
+            respose.firstPage = urlBl.getPageUrl(new Pagination(1, pagination.pageSize), route);
+            respose.lastPage = urlBl.getPageUrl(new Pagination(numberPagesFinal, pagination.pageSize), route);
+            respose.numberPages = numberPagesFinal;
+            respose.totalRecords = totalOffers;
 
             return respose;
         }
